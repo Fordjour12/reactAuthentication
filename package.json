@@ -1,0 +1,12 @@
+{
+    "name": "reactauthentication",
+    "version": "1.0.0",
+    "description": "A Reactjs Authentication and Authorization Process to login and signup and generate an jwt",
+    "main": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Bobie Fordjour McCamble Kofi",
+    "license": "MIT"
+}
