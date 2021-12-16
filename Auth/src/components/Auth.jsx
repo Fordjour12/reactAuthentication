@@ -4,7 +4,7 @@ import { BiUser, BiLock, BiEnvelope } from "react-icons/bi";
 import Log from "../images/undraw_login_re_4vu2.svg";
 import classes from "./Auth.module.css";
 
-const Auth = () => {
+const Auth = ({ setToken }) => {
     // changeForm handler form changing form signup to login
     const [changeForm, setChangeForm] = useState(false);
     const changeFormHandler = () => setChangeForm(!changeForm);
@@ -16,6 +16,8 @@ const Auth = () => {
     const [password, setEnteredPassword] = useState("");
     const [signupFormIsValid, setSignupFormIsValid] = useState(false);
     const [loginFormIsValid, setLoginFormIsValid] = useState(false);
+
+    const [loginStatus, setLoginStatus] = useState(false)
 
     // loginUseEffect
     useEffect(() => {
@@ -88,6 +90,30 @@ const Auth = () => {
         console.log(responseData);
     };
 
+    const submitLoginFormHandler = async (event) => {
+        event.preventDefault();
+
+        const response = await fetch(
+            "http://192.168.63.242:5001/api/v1/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            },
+        );
+     
+        const responseData = await response.json();
+        localStorage.setItem("token", responseData.token);
+        localStorage.setItem("userId", responseData.userId);
+
+        console.log(responseData);
+    };
+
     return (
         <div className={classes.formContainer}>
             <div className={classes.formContent}>
@@ -95,7 +121,11 @@ const Auth = () => {
                     <img src={Log} alt="" className={classes.image} />
                 </div>
                 <div className={classes.forms}>
-                    <form action="" className={classes.login}>
+                    <form
+                        action=""
+                        onSubmit={submitLoginFormHandler}
+                        className={classes.login}
+                    >
                         <h1 className={classes.title}>Login</h1>
                         <div className={classes.inputInfo}>
                             <div className={classes.inputBox}>
